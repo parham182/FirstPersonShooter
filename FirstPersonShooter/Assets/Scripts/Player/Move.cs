@@ -52,6 +52,14 @@ public class Move : MonoBehaviour
 
         Vector3 moveDir = (camRight * moveInput.x + camForward * moveInput.y).normalized;
 
+        if (run.action.IsPressed())
+        {
+            speed = runSpeed;
+        }
+        else
+        {
+            speed = walkSpeed;
+        }
         controller.Move(moveDir * speed * Time.deltaTime);
 
         velocity.y += gravity * Time.deltaTime;

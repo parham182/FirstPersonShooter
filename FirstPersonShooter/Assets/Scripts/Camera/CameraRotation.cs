@@ -1,123 +1,93 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
 
 public class CameraRotation : MonoBehaviour
 {
-    [SerializeField] float cameraSensY = 0.1f;
-    [SerializeField] float cameraSensX = 0.2f;
-    [SerializeField] Transform playerBody;
-    [SerializeField] float xClampMin = -90f;
-    [SerializeField] float xClampMax = 90f;
-    [SerializeField] RectTransform cameraTouchArea;
+    [Header("References")]
+    [SerializeField] private GameObject playerCamera;
+    [SerializeField] private Transform playerBody;
+    public InputActionReference mouse;
 
-    public bool enable = true;
+    [Header("Settings")]
+    [SerializeField] private float sensitivity = 120f;
+    [SerializeField] private float xClampMin = -90f;
+    [SerializeField] private float xClampMax = 90f;
 
-    private Vector2 lookInput;
-    private float xRotation = 0f;
-    private float yRotation = 0f;
-    private bool isTouchingCameraArea = false;
-    private int touchFingerId = -1;
+    private float xRotation;
+    private float yRotation;
 
-    void Start()
+    bool canRotate;
+
+    void OnEnable()
     {
+        if (mouse != null)
+            mouse.action.Enable();
+    }
+
+    void OnDisable()
+    {
+        if (mouse != null)
+            mouse.action.Disable();
+    }
+
+
+    private void Start()
+    {
+        canRotate = true;
+        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        if (playerBody == null)
+            playerBody = transform.parent;
+
+        // sync initial rotation
         xRotation = transform.localEulerAngles.x;
         if (xRotation > 180f) xRotation -= 360f;
 
-        yRotation = playerBody != null ? playerBody.localEulerAngles.y : 0f;
+        if (playerBody != null)
+            yRotation = playerBody.localEulerAngles.y;
     }
 
-    void Update()
+    public void DisableCameraRotation()
     {
-        if (enable)
-            HandleTouchInput();
+        canRotate = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+    public void EnableCameraRotation()
+    {
+        canRotate = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    private void HandleTouchInput()
+    void LateUpdate()
     {
-        if (Touchscreen.current == null) return;
-
-        var touches = Touchscreen.current.touches;
-
-        for (int i = 0; i < touches.Count; ++i)
-        {
-            var touch = touches[i];
-
-            if (touch.press.wasPressedThisFrame)
-            {
-                Vector2 touchPos = touch.position.ReadValue();
-
-                if (IsPointerOverUI(touchPos))
-                {
-                    continue;
-                }
-
-                if (IsTouchInCameraArea(touchPos))
-                {
-                    isTouchingCameraArea = true;
-                    touchFingerId = i;
-                }
-            }
-            else if (touch.press.wasReleasedThisFrame && touchFingerId == i)
-            {
-                isTouchingCameraArea = false;
-                touchFingerId = -1;
-            }
-
-            if (isTouchingCameraArea && touchFingerId == i && touch.press.isPressed)
-            {
-                Vector2 delta = touch.delta.ReadValue();
-
-                float deltaX = delta.x * cameraSensX;
-                float deltaY = delta.y * cameraSensY;
-
-                lookInput = new Vector2(deltaX, deltaY);
-                MoveCamera();
-            }
-        }
+        if (mouse == null) return;
+        LookAround();
     }
 
-    private bool IsTouchInCameraArea(Vector2 touchPosition)
+    void LookAround()
     {
-        if (cameraTouchArea == null)
-            return !IsPointerOverUI(touchPosition);
+        if (!canRotate) return;
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            cameraTouchArea,
-            touchPosition,
-            null,
-            out Vector2 localPoint
-        );
+        Vector2 look = mouse.action.ReadValue<Vector2>();
 
-        return cameraTouchArea.rect.Contains(localPoint);
-    }
+        float mouseX = look.x * sensitivity * Time.deltaTime;
+        float mouseY = look.y * sensitivity * Time.deltaTime;
 
-    private bool IsPointerOverUI(Vector2 screenPosition)
-    {
-        if (EventSystem.current == null) return false;
+        yRotation += mouseX;
+        xRotation -= mouseY;
 
-        var pointerData = new PointerEventData(EventSystem.current)
-        {
-            position = screenPosition
-        };
-
-        var results = new System.Collections.Generic.List<RaycastResult>();
-        EventSystem.current.RaycastAll(pointerData, results);
-
-        return results.Count > 0;
-    }
-
-    private void MoveCamera()
-    {
-        yRotation += lookInput.x;
-        xRotation -= lookInput.y;
         xRotation = Mathf.Clamp(xRotation, xClampMin, xClampMax);
 
+        // camera pitch
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
+        // player yaw
         if (playerBody != null)
-        {
             playerBody.localRotation = Quaternion.Euler(0f, yRotation, 0f);
-        }
     }
+
 }
