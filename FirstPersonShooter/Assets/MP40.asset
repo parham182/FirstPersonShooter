@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2e0e5753291454987a10c7afa649be, type: 3}
+  m_Name: MP40
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponName: MP40
+  weaponPrefab: {fileID: 6087711492313183185, guid: c6860c3033523354e9ca25c661f057c1, type: 3}
+  icon: {fileID: 0}
+  damage: 10
+  fireRate: 0.1
+  isAutomatic: 1
+  range: 100
+  spread: 0.02
+  magazineSize: 30
+  maxReserveAmmo: 90
+  reloadTime: 1.5
+  recoilX: 2
+  recoilY: 2
+  muzzleFlashPrefab: {fileID: 0}
+  hitEffectPrefab: {fileID: 0}
+  fireSound: {fileID: 0}
+  reloadSound: {fileID: 0}
