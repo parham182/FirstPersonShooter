@@ -58,10 +58,10 @@ public class WeaponManager : MonoBehaviour
             }
         }
 
-        // سوییچ با اسکرول ماوس
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll > 0f) SwitchNext();
-        else if (scroll < 0f) SwitchPrevious();
+        // // سوییچ با اسکرول ماوس
+        // float scroll = Input.GetAxis("Mouse ScrollWheel");
+        // if (scroll > 0f) SwitchNext();
+        // else if (scroll < 0f) SwitchPrevious();
     }
 
     public void SwitchNext()
