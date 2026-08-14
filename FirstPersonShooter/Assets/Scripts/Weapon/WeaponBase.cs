@@ -18,7 +18,7 @@ public class WeaponBase : MonoBehaviour
     [Header("Input")]
     [SerializeField] private InputActionReference fireAction;
     [SerializeField] private InputActionReference reloadAction;
-
+    [SerializeField] private Animator gun;
     private WeaponManager weaponManager;
 
     private void Awake()
@@ -103,6 +103,7 @@ public class WeaponBase : MonoBehaviour
 
     private void Shoot()
     {
+        gun.SetTrigger("isShoot");
         Vector3 direction = playerCamera.transform.forward;
         direction += playerCamera.transform.TransformDirection(
             Random.Range(-data.spread, data.spread),
