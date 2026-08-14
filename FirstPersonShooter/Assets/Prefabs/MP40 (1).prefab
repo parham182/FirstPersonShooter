@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &919693789262821432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2253431848679205855}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2253431848679205855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919693789262821432}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.139, z: 0.0111}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3850316491205204436}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6087711492313183185
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,6 +43,7 @@ GameObject:
   - component: {fileID: 6973604959737066097}
   - component: {fileID: 1168340100344774410}
   - component: {fileID: 5241289284375837577}
+  - component: {fileID: 7472145728046987083}
   m_Layer: 0
   m_Name: MP40 (1)
   m_TagString: Untagged
@@ -27,11 +59,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6087711492313183185}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.70710576, y: -0, z: -0, w: 0.70710784}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.339, y: -0.2, z: 0.661}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 2253431848679205855}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &6973604959737066097
@@ -103,6 +136,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10274439bedf7314e92f68cbbfb2ca2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponBase
-  data: {fileID: 0}
-  firePoint: {fileID: 0}
+  data: {fileID: 11400000, guid: b6e4ffdc1c4b4e94c8670d3f505fd191, type: 2}
+  firePoint: {fileID: 2253431848679205855}
   playerCamera: {fileID: 0}
+  weaponAnimator: {fileID: 0}
+  fireAction: {fileID: 5064623459612773614, guid: 9b5a0607448d7854594b62b72647ff6b, type: 3}
+  reloadAction: {fileID: 8123800817565384546, guid: 9b5a0607448d7854594b62b72647ff6b, type: 3}
+  gun: {fileID: 0}
+--- !u!95 &7472145728046987083
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087711492313183185}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2613d2a176202a24394a94d68ff48499, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

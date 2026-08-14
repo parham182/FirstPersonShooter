@@ -25,7 +25,7 @@ MonoBehaviour:
   reloadTime: 1.5
   recoilX: 2
   recoilY: 2
-  muzzleFlashPrefab: {fileID: 0}
-  hitEffectPrefab: {fileID: 0}
+  muzzleFlashPrefab: {fileID: 100000, guid: 756d99540142b5e4a8d174e18a6310d9, type: 3}
+  hitEffectPrefab: {fileID: 110790, guid: 0f75f6db4a318f54382e0c98b2226db8, type: 3}
   fireSound: {fileID: 0}
   reloadSound: {fileID: 0}
